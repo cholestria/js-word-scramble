@@ -20,22 +20,33 @@
                 };
             }
 
+        String.prototype.shuffle = function () {
+            var a = this.split(""),
+            n = a.length;
+
+            for (var i = n -1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+            return a.join("");
+        }
+
         while (playing) {
 
             ranIndex = Math.floor(Math.random()*WORDS.length)
 
             var word = WORDS[ranIndex]
-            var scramble = SCRAMBLED[ranIndex]
+            var scramble = word.shuffle()
 
             var guess = prompt("The word is " + scramble + ". What is the original word?").toLowerCase().trim() 
 
-            if (guess === word) {
-                alert("You guessed correctly, congratulations!")
-            }
-            else {
-                alert("Wrong guess!")
-            };
-               
+            while (guess !== word) {
+                   var guess = prompt("Wrong guess, try again! The word is " + scramble).toLowerCase().trim()
+            } 
+
+            alert("You guessed correctly, congratulations!");
 
             playing = confirm("Press OK To keep playing or Cancel to quit");
         }
